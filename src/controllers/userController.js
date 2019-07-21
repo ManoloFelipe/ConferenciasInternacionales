@@ -471,6 +471,8 @@ function misConferencias(req,res) {
 function eliminarUsuario(req, res){
     var userId = req.params.id
 
+    if(req.user.rol != 'ADMIN') return res.status(200).send({ message: 'No eres administrador, no puedes eliminar usuarios' })
+
     User.findByIdAndDelete(userId, (err, eliminado)=>{
         if (err) return res.status(500).send({ message: 'error en la peticion' });
         if (!eliminado) return res.status(404).send({ message: 'no existe el usuario' });            
