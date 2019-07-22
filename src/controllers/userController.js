@@ -468,7 +468,7 @@ function misConferencias(req,res) {
     })
 }
 
-function eliminarUsuario(req, res){
+function eliminarUsuario(req, res){ //RECORDATORIO: hacer el eliminar al usuario de las charlas en las que se inscribió
     var userId = req.params.id
 
     if(req.user.rol != 'ADMIN') return res.status(200).send({ message: 'No eres administrador, no puedes eliminar usuarios' })
