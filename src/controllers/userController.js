@@ -15,6 +15,10 @@ function registrar(req, res) {
     if (params.nombre && params.email && params.password) {
         user.nombre = params.nombre;
         user.email = params.email;
+        user.telefono = params.telefono;
+        user.sexo = params.sexo;
+        user.profesion = params.profesion;
+        user.empresa = params.empresa;
         user.rol = 'ROLE_USUARIO';
         user.image = null;
 
@@ -52,10 +56,10 @@ function registrar(req, res) {
 
 }
 
-function getUser(req,res){
+function getUser(req, res) {
     var userId = req.params.id;
 
-    User.findById(userId,(err, usuarioEncontrado) => {
+    User.findById(userId, (err, usuarioEncontrado) => {
         if (err) return res.status(500).send({ message: 'error en la peticion' })
         if (!usuarioEncontrado) return res.status(400).send({ message: 'error en la busqueda del usuario' })
         return res.status(200).send({ user: usuarioEncontrado })
@@ -66,6 +70,11 @@ function getUsers(req, res) {
     User.find().exec((err, usuariosEncontrados) => {
         if (err) return res.status(500).send({ message: 'error en la peticion' })
         if (!usuariosEncontrados) return res.status(400).send({ message: 'error en la busqueda de usuarios' })
+
+        for (let i = 0; i < usuariosEncontrados.length; i++) {
+            delete usuariosEncontrados[i].password
+        }
+
         return res.status(200).send({ usuarios: usuariosEncontrados })
     })
 }
@@ -175,11 +184,11 @@ function editarUsuario(req, res) {
 
 function verificarEmail(req, res) {
     var correo = req.params.correo;
-    var result = req.params.codigo;    
-            
+    var result = req.params.codigo;
+
     var transporter = nodemailer.createTransport({
         service: "gmail",
-            
+
         secure: false, // true for 465, false for other ports
         auth: {
             user: `noreplykinal@gmail.com`, // Cambialo por tu email
@@ -448,34 +457,34 @@ function verificarEmail(req, res) {
     </html>
 `
     };
-    transporter.sendMail(mailOptions, function (err, info) {
+    transporter.sendMail(mailOptions, function(err, info) {
         if (err)
             console.log(err)
         else
             console.log(info);
-            res.status(200).send({ message: 'Revise su bandeja de correo por favor, en caso de no encontrarlo, revice "SPAM"' });
+        res.status(200).send({ message: 'Revise su bandeja de correo por favor, en caso de no encontrarlo, revice "SPAM"' });
     });
 }
 
-function misConferencias(req,res) {
+function misConferencias(req, res) {
     var userId = req.user.sub
 
-    Conferencia.find( {registrados: { $elemMatch: { user: userId } }}, (err, enc)=>{
-        if (err) return res.status(500).send({ message: 'error en la peticion' });
-        if (!enc) return res.status(404).send({ message: 'no te has registrado a alguna conferencia ' });            
+    Conferencia.find({ registrados: { $elemMatch: { user: userId } } }, (err, enc) => {
+        if (err) return res.status(500).send({ message: 'error en la petición' });
+        if (!enc) return res.status(404).send({ message: 'no te has registrado a alguna conferencia ' });
 
         return res.status(200).send({ message: enc })
     })
 }
 
-function eliminarUsuario(req, res){ //RECORDATORIO: hacer el eliminar al usuario de las charlas en las que se inscribió
+function eliminarUsuario(req, res) { //RECORDATORIO: hacer el eliminar al usuario de las charlas en las que se inscribió
     var userId = req.params.id
 
-    if(req.user.rol != 'ADMIN') return res.status(200).send({ message: 'No eres administrador, no puedes eliminar usuarios' })
+    if (req.user.rol != 'ADMIN') return res.status(200).send({ message: 'No eres administrador, no puedes eliminar usuarios' })
 
-    User.findByIdAndDelete(userId, (err, eliminado)=>{
-        if (err) return res.status(500).send({ message: 'error en la peticion' });
-        if (!eliminado) return res.status(404).send({ message: 'no existe el usuario' });            
+    User.findByIdAndDelete(userId, (err, eliminado) => {
+        if (err) return res.status(500).send({ message: 'error en la petición' });
+        if (!eliminado) return res.status(404).send({ message: 'no existe el usuario' });
 
         return res.status(200).send({ message: 'Usuario Eliminado' })
     })

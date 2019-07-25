@@ -11,9 +11,10 @@ var ConferenciaSchema = Schema({
     hora: String,
     fecha: String,
     image: String,
-    preregistrados: [{type: Schema.ObjectId, ref: "User"}],
-    registrados: [{
-        user: {type: Schema.ObjectId, ref: "User"},
+    interesados: [{ type: Schema.ObjectId, ref: "User" }],
+    preinscritos: [{ type: Schema.ObjectId, ref: "User" }],
+    inscritos: [{
+        user: { type: Schema.ObjectId, ref: "User" },
         color: String
     }]
 });
