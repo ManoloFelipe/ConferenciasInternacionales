@@ -9,7 +9,7 @@ function addPatrocinador(req, res) {
     if (params.nombre) {
         patrocinador.nombre = params.nombre;
         patrocinador.descripcion = params.descripcion;
-        patrocinador.image = null;
+        patrocinador.image = params.image;
         patrocinador.internacional = params.internacional;
 
         patrocinador.save((err, patrGuardado) => {
