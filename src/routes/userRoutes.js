@@ -5,7 +5,8 @@ var UserController = require('../controllers/userController');
 var conferenciaController = require('../controllers/conferenciaController');
 var TrackController = require('../controllers/trackController');
 var PatrocinadorController = require('../controllers/patrocinadorController');
-var md_auth = require('../middlewares/autheticated');
+var AntecedenteController = require('../controllers/antecedenteController');
+var md_auth = require('../middlewares/authenticated');
 
 //SUBIR IMAGEN
 var multiparty = require('connect-multiparty');
@@ -51,4 +52,12 @@ api.get('/patrocinador/get/all', PatrocinadorController.getPatrocinadores)
 api.put('/patrocinador/upadte/:id', PatrocinadorController.updatePatrocinador)
 api.delete('/patrocinador/delete/:id', PatrocinadorController.deletePatrocinador)
 api.post('/patrocinador/add', PatrocinadorController.addPatrocinador)
+    //Antecedente
+api.post('/add-antecedente', AntecedenteController.agregarAntecedente);
+api.put('/editar-antecedente/:id', AntecedenteController.editarAntecedente);
+api.delete('/eliminar-antecedente/:id', AntecedenteController.eliminarAntecedente);
+api.get('/listar-antecedente/:id', AntecedenteController.listarId)
+api.get('/listar', AntecedenteController.listar)
+
+
 module.exports = api;
