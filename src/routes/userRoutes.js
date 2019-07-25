@@ -36,5 +36,9 @@ api.put('/conferencia/preregistrarse/:id', md_auth.ensureAuth, conferenciaContro
 api.put('/conferencia/registrarse/:id', md_auth.ensureAuth, conferenciaController.registrarEnCharla)
 api.put('/conferencia/registrado/:id/:color', md_auth.ensureAuth, conferenciaController.cambiarColor)
 api.delete('/conferencia/eliminar/:id', md_auth.ensureAuth,conferenciaController.eliminarCharla)
+//Track
+api.get('/tracks',  TrackController.gettracks);
+api.post('/track', TrackController.addtracks);
+api.get('/track/:id',  TrackController.gettrack)
 
 module.exports = api;
