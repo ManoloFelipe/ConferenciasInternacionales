@@ -31,14 +31,15 @@ api.put('/email/:correo/:codigo', UserController.verificarEmail)
 api.delete('/eliminar/:id', md_auth.ensureAuth, UserController.eliminarUsuario)
     //Conferencias
 api.get('/conferencia/listarAll', conferenciaController.listarCharlas);
+api.get('/conferencia/listarColor', conferenciaController.inscritosPorColor);
 api.get('/conferencia/buscar/:id', conferenciaController.buscarCharlaId)
 api.post('/conferencia/registrar', conferenciaController.registrarCharla);
 api.post('/subir-imagen-conferencia/:id', [md_auth.ensureAuth, md_subirConf], conferenciaController.subirImagen);
 api.get('/obtener-imagen-conferencia/:nombreImagen', conferenciaController.obtenerImagen)
 api.put('/conferencia/editar/:id', md_auth.ensureAuth, conferenciaController.editarCharla)
-api.put('/conferencia/interesado/:id', md_auth.ensureAuth, conferenciaController.interesadosEnCharla)
-api.put('/conferencia/inscribir/:id/:user', md_auth.ensureAuth, conferenciaController.inscribirEnCharla)
-api.put('/conferencia/preinscribir/:id/:user', md_auth.ensureAuth, conferenciaController.preinscribirEnCharla)
+api.post('/conferencia/interesado/:id', md_auth.ensureAuth, conferenciaController.interesadosEnCharla)
+api.post('/conferencia/inscribir/:id/:user', md_auth.ensureAuth, conferenciaController.inscribirEnCharla)
+api.post('/conferencia/preinscribir/:id/:user', md_auth.ensureAuth, conferenciaController.preinscribirEnCharla)
 api.put('/conferencia/registrado/:id/:color/:user', md_auth.ensureAuth, conferenciaController.cambiarColor)
 api.delete('/conferencia/eliminar/:id', md_auth.ensureAuth, conferenciaController.eliminarCharla)
     //Track
