@@ -85,6 +85,59 @@ function getInternacionales(req, res) {
     })
 }
 
+function subirImagen(req, res) {
+    var charlaId = req.params.id;
+
+    if (req.files) {
+        var file_path = req.files.image.path;
+        console.log(file_path);
+
+        var file_split = file_path.split('\\');
+        console.log(file_split);
+
+        var file_name = file_split[3];
+        console.log(file_name);
+
+        var ext_split = file_name.split('\.');
+        console.log(ext_split);
+
+        var file_ext = ext_split[1];
+        console.log(file_ext);
+
+        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
+            Charla.findByIdAndUpdate(charlaId, { image: file_name }, { new: true }, (err, usuarioActualizado) => {
+                if (err) return res.status(500).send({ message: ' no se a podido actualizar la conferencia' })
+
+                if (!usuarioActualizado) return res.status(404).send({ message: 'error en los datos de la conferencia, no se pudo actualizar' })
+
+                return res.status(200).send({ conferencia: 'imagen subida' });
+            })
+        } else {
+            return removeFilesOfUploads(res, file_path, 'extension no valida')
+        }
+
+    }
+}
+
+function removeFilesOfUploads(res, file_path, message) {
+    fs.unlink(file_path, (err) => {
+        return res.status(200).send({ message: message })
+    })
+}
+
+function obtenerImagen(req, res) {
+    var image_file = req.params.nombreImagen;
+    var path_file = './src/uploads/sponsor' + image_file;
+
+    fs.exists(path_file, (exists) => {
+        if (exists) {
+            res.sendFile(path.resolve(path_file));
+        } else {
+            res.status(200).send({ message: 'no existe la imagen' })
+        }
+    });
+}
+
 module.exports = {
     getNacionales,
     getInternacionales,
@@ -92,5 +145,7 @@ module.exports = {
     getPatrocinadores,
     updatePatrocinador,
     deletePatrocinador,
-    addPatrocinador
+    addPatrocinador,
+    obtenerImagen,
+    subirImagen
 }

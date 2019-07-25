@@ -231,9 +231,9 @@ function cambiarColor(req, res) {
     var userId = req.params.user
 
     Charla.findOneAndUpdate({ _id: charlaId, registrados: { $elemMatch: { user: userId } } }, { "registrados.$.color": req.params.color }, { new: true }, (err, usuarioActualizado) => {
-        if (err) return res.status(500).send({ message: 'error en la peticion de aumentar candidad a producto de usuario' })
+        if (err) return res.status(500).send({ message: 'error en la peticion de cambiar color de usuario' })
 
-        if (!usuarioActualizado) return res.status(200).send({ message: 'No se ha registrado en esta charla' })
+        if (!usuarioActualizado) return res.status(200).send({ message: 'No se ha cambiado color' })
 
         return res.status(200).send({ usuario: usuarioActualizado })
     })
@@ -291,6 +291,16 @@ function obtenerImagen(req, res) {
             res.status(200).send({ message: 'no existe la imagen' })
         }
     });
+}
+
+function inscritosPorColor(req, res) {
+    Charla.find({}, { inscritos: 1 }).exec((err, enc) => {
+        if (err) return res.status(500).send({ message: 'error en la peticion de aumentar candidad a producto de usuario' })
+
+        if (!usuarioActualizado) return res.status(200).send({ message: 'No se ha registrado en esta charla' })
+
+        return res.status(200).send({ message: enc })
+    }).sort('inscritos.color')
 }
 
 
