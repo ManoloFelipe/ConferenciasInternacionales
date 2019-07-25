@@ -294,7 +294,9 @@ function obtenerImagen(req, res) {
 }
 
 function getInteresados(req, res) {
+    var charlaId = req.params.id;
 
+    Charla.findById(charlaId, { interesados: true }, (err, enc))
 }
 
 function getPreinscritos(req, res) {

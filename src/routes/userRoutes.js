@@ -4,6 +4,7 @@ var express = require('express');
 var UserController = require('../controllers/userController');
 var conferenciaController = require('../controllers/conferenciaController');
 var TrackController = require('../controllers/trackController');
+var PatrocinadorController = require('../controllers/patrocinadorController');
 var md_auth = require('../middlewares/autheticated');
 
 //SUBIR IMAGEN
@@ -41,5 +42,12 @@ api.delete('/conferencia/eliminar/:id', md_auth.ensureAuth, conferenciaControlle
 api.get('/tracks', TrackController.gettracks);
 api.post('/track', TrackController.addtracks);
 api.get('/track/:id', TrackController.gettrack)
-
+    //Patrocinadores
+api.get('/patrocinador/get/nationals', PatrocinadorController.getNacionales)
+api.get('/patrocinador/get/internationals', PatrocinadorController.getInternacionales)
+api.get('/patrocinador/get/one/:id', PatrocinadorController.getPatrocinador)
+api.get('/patrocinador/get/all', PatrocinadorController.getPatrocinadores)
+api.put('/patrocinador/upadte/:id', PatrocinadorController.updatePatrocinador)
+api.delete('/patrocinador/delete/:id', PatrocinadorController.deletePatrocinador)
+api.post('/patrocinador/add', PatrocinadorController.addPatrocinador)
 module.exports = api;
