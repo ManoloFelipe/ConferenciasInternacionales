@@ -36,7 +36,7 @@ api.get('/obtener-imagen-usuario/:nombreImagen', conferenciaController.obtenerIm
 api.put('/conferencia/editar/:id', md_auth.ensureAuth, conferenciaController.editarCharla)
 api.put('/conferencia/interesado/:id', md_auth.ensureAuth, conferenciaController.interesadosEnCharla)
 api.put('/conferencia/inscribir/:id/:user', md_auth.ensureAuth, conferenciaController.inscribirEnCharla)
-api.put('/conferencia/preinscribir/:id/:user', md_auth.ensureAuth, conferenciaController.preregistrarEnCharla)
+api.put('/conferencia/preinscribir/:id/:user', md_auth.ensureAuth, conferenciaController.preinscribirEnCharla)
 api.put('/conferencia/registrado/:id/:color/:user', md_auth.ensureAuth, conferenciaController.cambiarColor)
 api.delete('/conferencia/eliminar/:id', md_auth.ensureAuth, conferenciaController.eliminarCharla)
     //Track
