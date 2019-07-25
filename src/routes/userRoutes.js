@@ -3,6 +3,7 @@
 var express = require('express');
 var UserController = require('../controllers/userController');
 var conferenciaController = require('../controllers/conferenciaController');
+var TrackController = require('../controllers/trackController');
 var md_auth = require('../middlewares/autheticated');
 
 //SUBIR IMAGEN
