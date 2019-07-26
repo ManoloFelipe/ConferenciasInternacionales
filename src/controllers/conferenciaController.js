@@ -101,7 +101,26 @@ function buscarCharlaId(req, res) {
 
 function interesadosEnCharla(req, res) {
     var charlaId = req.params.id;
-    var userId = req.user.sub
+    var userId = req.user.sub    
+
+    Charla.find().exec((err, enc)=>{
+        for (let o = 0; o < enc.length; o++) {
+            for (let i = 0; i < enc[o].interesados.length; i++) {    
+                if(enc[o].interesados[i] == userId){                                        
+                    return res.status(200).send({ message: 'ya esta interesado en otro evento' });
+                }            
+            }
+            for (let i = 0; i < enc[o].preinscritos.length; i++) {
+                if(enc[o].preinscritos[i] == userId){
+                    return res.status(200).send({ message: 'ya esta preinscrito en otro evento' });
+                }            
+            }
+            for (let i = 0; i < enc[o].inscritos.length; i++) {
+                if(enc[o].inscritos[i].user == userId){
+                    return res.status(200).send({ message: 'ya esta inscrito en otro evento' });
+                }            
+            }
+        }
 
     Charla.findById(charlaId, (err, enc) => {
 
@@ -110,7 +129,7 @@ function interesadosEnCharla(req, res) {
 
         for (let i = 0; i < enc.interesados.length; i++) {
             if (enc.interesados[i] == userId) {
-                return res.status(200).send({ message: 'ya esta interesado a este evento' });
+                return res.status(200).send({ message: 'ya esta interesado en este evento' });
             }
         } //eslte for se encarga de buscar si el usuario ya se preregistro con anterioridad
 
@@ -136,12 +155,32 @@ function interesadosEnCharla(req, res) {
             })
         })
     })
+    
+})
 }
 
 function preinscribirEnCharla(req, res) {
     var charlaId = req.params.id;
     var userId = req.params.user
 
+    Charla.find().exec((err, enc)=>{
+        for (let o = 0; o < enc.length; o++) {
+            for (let i = 0; i < enc[o].interesados.length; i++) {    
+                if(enc[o].interesados[i] == userId){                                        
+                    return res.status(200).send({ message: 'ya esta interesado en otro evento' });
+                }            
+            }
+            for (let i = 0; i < enc[o].preinscritos.length; i++) {
+                if(enc[o].preinscritos[i] == userId){
+                    return res.status(200).send({ message: 'ya esta preinscrito en otro evento' });
+                }            
+            }
+            for (let i = 0; i < enc[o].inscritos.length; i++) {
+                if(enc[o].inscritos[i].user == userId){
+                    return res.status(200).send({ message: 'ya esta inscrito en otro evento' });
+                }            
+            }
+        }
     Charla.findById(charlaId, (err, enc) => {
 
         if (err) return res.status(500).send({ message: 'error en la peticion' });
@@ -165,12 +204,31 @@ function preinscribirEnCharla(req, res) {
             return res.status(200).send({ message: 'Ahora está preinscrito en este evento' });
         })
     })
+    })
 }
 
 function inscribirEnCharla(req, res) {
     var charlaId = req.params.id;
     var userId = req.params.user
 
+    Charla.find().exec((err, enc)=>{
+        for (let o = 0; o < enc.length; o++) {
+            for (let i = 0; i < enc[o].interesados.length; i++) {    
+                if(enc[o].interesados[i] == userId){                                        
+                    return res.status(200).send({ message: 'ya esta interesado en otro evento' });
+                }            
+            }
+            for (let i = 0; i < enc[o].preinscritos.length; i++) {
+                if(enc[o].preinscritos[i] == userId){
+                    return res.status(200).send({ message: 'ya esta preinscrito en otro evento' });
+                }            
+            }
+            for (let i = 0; i < enc[o].inscritos.length; i++) {
+                if(enc[o].inscritos[i].user == userId){
+                    return res.status(200).send({ message: 'ya esta inscrito en otro evento' });
+                }            
+            }
+        }
     Charla.findById(charlaId, (err, enc) => {
 
         if (err) return res.status(500).send({ message: 'error en la peticion' });
@@ -211,6 +269,7 @@ function inscribirEnCharla(req, res) {
             })
         })
     })
+})
 }
 
 function cambiarColor(req, res) {

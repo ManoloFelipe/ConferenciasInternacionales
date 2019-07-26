@@ -23,6 +23,7 @@ api.get('/usario/:id', md_auth.ensureAuth, UserController.getUser);
 api.get('/usuarios', UserController.getUsers);
 api.get('/conferencias', md_auth.ensureAuth, UserController.editarUsuario)
 api.post('/registrar', UserController.registrar);
+api.post('/registrarYSeguir/:id', UserController.registrarYSeguir);
 api.post('/login', UserController.login);
 api.post('/subir-imagen-usuario/:id', [md_auth.ensureAuth, md_subirUser], UserController.subirImagen);
 api.get('/obtener-imagen-usuario/:nombreImagen', UserController.obtenerImagen)
